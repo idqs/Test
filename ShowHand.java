@@ -1,6 +1,8 @@
 package ShowHand;
 //import ShowHand.*;
 import java.util.*;
+
+import com.sun.prism.j2d.J2DPipeline;
 /**
  * Description:
  * <br/> <a href="http://www.crazyit.org"> </a>
@@ -134,7 +136,9 @@ public class ShowHand
 				}
 			}
 			System.out.print("\n");
+			
 		}
+		System.out.println("Show Player Cards End...");
 	}
 	
 	/**
@@ -146,33 +150,47 @@ public class ShowHand
     //each player cards'color give to playerCardsSplit1, number give to playerCardsSplit2
     ArrayList<String>[] playerCardsSplit1 = new ArrayList[PLAY_NUM];
     ArrayList<String>[] playerCardsSplit2 = new ArrayList[PLAY_NUM];
+    int ComparisonResultInt = 0;
     //initialize playerCardsSplit1&2
     
     
 		for (int i = 0; i < players.length ; i++ ){
-      if (players[i] != null){
-        playerCardsSplit1[i] = new ArrayList<String>();
-        playerCardsSplit2[i] = new ArrayList<String>();
-        //System.out.println("playerCardsSplit1 initialized..." + playerCardsSplit1[i]);
-        //System.out.println("playerCardsSplit2 initialized..." + playerCardsSplit2[i]);
+			if (players[i] != null){
+					playerCardsSplit1[i] = new ArrayList<String>();
+					playerCardsSplit2[i] = new ArrayList<String>();
+					//System.out.println("playerCardsSplit1 initialized..." + playerCardsSplit1[i]);
+					//System.out.println("playerCardsSplit2 initialized..." + playerCardsSplit2[i]);
       
-        String[] tempGetEle = new String[PLAY_NUM];
-        for (int j = 0; j < playersCards[i].size(); j++){
-          tempGetEle[j] = playersCards[i].get(j);
-          String[] cardsParts = tempGetEle[j].split("-");
-          playerCardsSplit1[i].add(cardsParts[0]);
-          playerCardsSplit2[i].add(cardsParts[1]);
-        }
-        System.out.println("Player-" +i +"-Colors:" + playerCardsSplit1[i]);
-        System.out.println("Player-" +i +"-Numbers:" +playerCardsSplit2[i]);
+					String[] tempGetEle = new String[PLAY_NUM];
+					for (int j = 0; j < playersCards[i].size(); j++){
+						tempGetEle[j] = playersCards[i].get(j);
+						String[] cardsParts = tempGetEle[j].split("-");
+						playerCardsSplit1[i].add(cardsParts[0]);
+						playerCardsSplit2[i].add(cardsParts[1]);
+					}
+					System.out.println("Player-" +i +"-Colors:" + playerCardsSplit1[i]);
+					System.out.println("Player-" +i +"-Numbers:" +playerCardsSplit2[i]);
       }
     }
+		int k = 1;
+		
     
     //compare player cards numbers, firstly
+
+    switch (k){
+      case (1):
+      {
+    	  //compare number only
+    	  System.out.println("playerCardsSplit2[0] & [1]:" +playerCardsSplit2[0] +"and" + playerCardsSplit2[1]);
+    	  System.out.println(playerCardsSplit2[0].get(0).compareTo("4"));
+    	  ComparisonResultInt = OneNumber(playerCardsSplit2);
+    	  System.out.println("Round One - bigger player is:" + ComparisonResultInt);
+    	  break;
+      }
+          
+      
     /**
-    switch (int k = playerCardsSplit2.size()){
-      case (k =1):
-        //compare number only
+
       case (k=2):
         //see if double is there, otherwise compare number only
       case (k=3):
@@ -182,17 +200,72 @@ public class ShowHand
       case (k=5):
         //see if 5 consecutive # with same color is there, then see if 5 consecutive# is there,see if 4 same # is there, see if triple is there, 
         //then see if double exist, other wise compare # only
+        */     
     }
-    */
+
       
 		//return cardNum;
 	}
- 
-  /**
-	public boolean DoubleNumber(ArrayList<int>[] al){
-    return True;
-  }
-  */
+
+  
+    public int OneNumber(ArrayList<String>[] playerCardsInt){
+    	String biggerTemp = new String();
+    	int returnPlayerIndex = 0;
+		for (int i = 0; i < players.length; i++){
+			//player one and player two have same #
+			//int testxx = playerCardsInt[i].get(0).compareTo(biggerTemp);
+			//System.out.println("testxx:" +testxx +"and biggerTemp" +biggerTemp +"and" +playerCardsInt[i].get(0));
+			if (players[i] != null && playerCardsInt[i].get(0).compareTo(biggerTemp) == 0){
+				//CompareColor (i, i-1);
+				//if equals, then compare color: "spade" , "heart" ,"club"  , "diamond"
+				returnPlayerIndex = i;
+				System.out.println("Round One - Bossy Player:" + i + "And i-1");
+			}
+			
+			//current player got J-Q-K-A
+			else if (playerCardsInt[i].contains("J") || playerCardsInt[i].contains("Q") || playerCardsInt[i].contains("K") || playerCardsInt[i].contains("A")){
+				//current player bigger than last powerful player
+				if (playerCardsInt[i].contains("A")){
+					biggerTemp = playerCardsInt[i].get(0);
+					returnPlayerIndex = i;
+				}
+				else if (playerCardsInt[i].contains("K") && biggerTemp.compareTo("A") != 0){
+					biggerTemp = playerCardsInt[i].get(0);
+					returnPlayerIndex = i;
+				}
+				else if (playerCardsInt[i].contains("Q") && (biggerTemp.compareTo("A") != 0 || biggerTemp.compareTo("K") != 0) ){
+					biggerTemp = playerCardsInt[i].get(0);
+					returnPlayerIndex = i;
+				}
+				else if (playerCardsInt[i].contains("J") && (biggerTemp.compareTo("A") != 0 || biggerTemp.compareTo("K") != 0 || biggerTemp.compareTo("Q") != 0)){
+					biggerTemp = playerCardsInt[i].get(0);
+					returnPlayerIndex = i;
+				}	
+			}
+			
+			//current player got 1-10
+			else if (players[i] != null && playerCardsInt[i].get(0).compareTo(biggerTemp) > 0){
+				//
+				biggerTemp = playerCardsInt[i].get(0);
+				System.out.println("Round One - Bossy Player:" + i + "current player got 1-10" +biggerTemp);
+			}
+			
+		}
+		System.out.println("biggerTemp value:" +biggerTemp +"-And return index:" +returnPlayerIndex);
+		return returnPlayerIndex;
+	
+    }
+
+
+    /**
+	public boolean DoubleNumber(ArrayList<Integer>[] alInt, int arrayListSize){
+		for (i = 0; i < PLAY_NUM; i++){
+			if (alInt[i].get(0) >=
+		}
+		return true;
+    }
+    */
+
   
 	public static void main(String[] args)
 	{
@@ -205,8 +278,8 @@ public class ShowHand
 		System.out.println("Start: ---------------");
 		// 
 		sh.deliverCard("player1");
-		sh.CardsComparison();
 		sh.showPlayerCards();
+		sh.CardsComparison();
 		/*
 		*
 		*/
