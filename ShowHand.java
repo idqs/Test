@@ -1,8 +1,9 @@
-package ShowHand;
+package showhand;
+import java.security.PublicKey;
 //import ShowHand.*;
 import java.util.*;
 
-import com.sun.prism.j2d.J2DPipeline;
+//import com.sun.prism.j2d.J2DPipeline;
 /**
  * Description:
  * <br/> <a href="http://www.crazyit.org"> </a>
@@ -16,7 +17,7 @@ import com.sun.prism.j2d.J2DPipeline;
 public class ShowHand
 {
 	// define player#
-	private final int PLAY_NUM = 5;
+	private final static int PLAY_NUM = 5;
 	// define cards type & values
 	private String[] types = {"spade" , "heart" ,"club"  , "diamond"};
 	private String[] values = {"2" , "3" , "4" , "5"
@@ -26,7 +27,7 @@ public class ShowHand
 	// define all cards
 	private List<String> cards = new LinkedList<String>();
 	// players
-	private String[] players = new String[PLAY_NUM];
+	private static String[] players = new String[PLAY_NUM];
 	// player's card
 	private LinkedList<String>[] playersCards = new LinkedList[PLAY_NUM];
 	/**
@@ -145,7 +146,7 @@ public class ShowHand
 	 * Who's card is bigger, get the winner
 	 */
 	
-  public void CardsComparison()
+  public int CardsComparison(int playRound)
 	{
     //each player cards'color give to playerCardsSplit1, number give to playerCardsSplit2
     ArrayList<String>[] playerCardsSplit1 = new ArrayList[PLAY_NUM];
@@ -170,9 +171,9 @@ public class ShowHand
 					}
 					System.out.println("Player-" +i +"-Colors:" + playerCardsSplit1[i]);
 					System.out.println("Player-" +i +"-Numbers:" +playerCardsSplit2[i]);
-      }
-    }
-		int k = 1;
+			}
+		}
+		int k = playRound;
 		
     
     //compare player cards numbers, firstly
@@ -181,18 +182,24 @@ public class ShowHand
       case (1):
       {
     	  //compare number only
-    	  System.out.println("playerCardsSplit2[0] & [1]:" +playerCardsSplit2[0] +"and" + playerCardsSplit2[1]);
-    	  System.out.println(playerCardsSplit2[0].get(0).compareTo("4"));
-    	  ComparisonResultInt = OneNumber(playerCardsSplit2);
+    	  //System.out.println("playerCardsSplit2:" +playerCardsSplit2);
+    	  ComparisonResultInt = OneNumber(playerCardsSplit2, playerCardsSplit1);
     	  System.out.println("Round One - bigger player is:" + ComparisonResultInt);
     	  break;
       }
           
       
-    /**
 
-      case (k=2):
+
+      case (2):{
+    	  ComparisonResultInt = TwoNumber(playerCardsSplit2, playerCardsSplit1);
+    	  System.out.println("Round Two - bigger player is:" + ComparisonResultInt);
+    	  break;
+      }
+      
+
         //see if double is there, otherwise compare number only
+          /**
       case (k=3):
         //see if triple is there, then see if double exist, other wise compare # only
       case (k=4):
@@ -204,12 +211,15 @@ public class ShowHand
     }
 
       
-		//return cardNum;
+		//return which player is bigger;
+    return ComparisonResultInt;
 	}
 
   
-    public int OneNumber(ArrayList<String>[] playerCardsInt){
-    	String biggerTemp = new String();
+    public int OneNumber(ArrayList<String>[] playerCardsInt, ArrayList<String>[] playerCardsColor){
+    	String biggerTemp = new String("0");
+    	//Map biggerTempMap = new HashMap();
+    	
     	int returnPlayerIndex = 0;
 		for (int i = 0; i < players.length; i++){
 			//player one and player two have same #
@@ -218,40 +228,63 @@ public class ShowHand
 			if (players[i] != null && playerCardsInt[i].get(0).compareTo(biggerTemp) == 0){
 				//CompareColor (i, i-1);
 				//if equals, then compare color: "spade" , "heart" ,"club"  , "diamond"
-				returnPlayerIndex = i;
+				if(getColorRank(playerCardsColor[i].get(0)) > getColorRank(playerCardsColor[returnPlayerIndex].get(0))){
+					returnPlayerIndex = i;
+				}
+				else if (getColorRank(playerCardsColor[i].get(0)) == getColorRank(playerCardsColor[returnPlayerIndex].get(0))){
+					System.out.println("Cheating!duplicate color and number...");
+				}
 				System.out.println("Round One - Bossy Player:" + i + "And i-1");
+				continue;
 			}
 			
 			//current player got J-Q-K-A
-			else if (playerCardsInt[i].contains("J") || playerCardsInt[i].contains("Q") || playerCardsInt[i].contains("K") || playerCardsInt[i].contains("A")){
+			else if (players[i] != null && (playerCardsInt[i].contains("J") || playerCardsInt[i].contains("Q") || playerCardsInt[i].contains("K") || playerCardsInt[i].contains("A"))){
 				//current player bigger than last powerful player
 				if (playerCardsInt[i].contains("A")){
 					biggerTemp = playerCardsInt[i].get(0);
+					//biggerTempMap.put(i, playerCardsInt[i].get(0));
 					returnPlayerIndex = i;
+					continue;
 				}
 				else if (playerCardsInt[i].contains("K") && biggerTemp.compareTo("A") != 0){
 					biggerTemp = playerCardsInt[i].get(0);
+					//biggerTempMap.put(i, playerCardsInt[i].get(0));
 					returnPlayerIndex = i;
+					continue;
 				}
-				else if (playerCardsInt[i].contains("Q") && (biggerTemp.compareTo("A") != 0 || biggerTemp.compareTo("K") != 0) ){
+				else if (playerCardsInt[i].contains("Q") && biggerTemp.compareTo("A") != 0 && biggerTemp.compareTo("K") != 0 ){
 					biggerTemp = playerCardsInt[i].get(0);
+					//biggerTempMap.put(i, playerCardsInt[i].get(0));
 					returnPlayerIndex = i;
+					continue;
 				}
-				else if (playerCardsInt[i].contains("J") && (biggerTemp.compareTo("A") != 0 || biggerTemp.compareTo("K") != 0 || biggerTemp.compareTo("Q") != 0)){
+				else if (playerCardsInt[i].contains("J") && biggerTemp.compareTo("A") != 0 && biggerTemp.compareTo("K") != 0 && biggerTemp.compareTo("Q") != 0){
 					biggerTemp = playerCardsInt[i].get(0);
+					//biggerTempMap.put(i, playerCardsInt[i].get(0));
 					returnPlayerIndex = i;
+					continue;
 				}	
 			}
+			//current player got 10
+			else if (players[i] != null && playerCardsInt[i].contains("10") && biggerTemp.compareTo("A") < 0){
+				biggerTemp = playerCardsInt[i].get(0);
+				//biggerTempMap.put(i, playerCardsInt[i].get(0));
+				returnPlayerIndex = i;
+				continue;
+			}
 			
-			//current player got 1-10
-			else if (players[i] != null && playerCardsInt[i].get(0).compareTo(biggerTemp) > 0){
+			//current player got 1-9
+			else if (players[i] != null && biggerTemp.compareTo(String.valueOf(10)) != 0 && playerCardsInt[i].get(0).compareTo(biggerTemp) > 0){
 				//
 				biggerTemp = playerCardsInt[i].get(0);
-				System.out.println("Round One - Bossy Player:" + i + "current player got 1-10" +biggerTemp);
+				//biggerTempMap.put(i, playerCardsInt[i].get(0));
+				returnPlayerIndex = i;
+				//System.out.println("Round One - Bossy Player:" + i + "current player got 1-10:" +biggerTemp);
 			}
 			
 		}
-		System.out.println("biggerTemp value:" +biggerTemp +"-And return index:" +returnPlayerIndex);
+		System.out.println("Round One, biggerTemp value:" +biggerTemp +"-And return player index:" +returnPlayerIndex);
 		return returnPlayerIndex;
 	
     }
@@ -266,11 +299,48 @@ public class ShowHand
     }
     */
 
-  
+    /**
+     * Method: Round Two Comparison
+     */
+    public int TwoNumber(ArrayList<String>[] playerCardsInt, ArrayList<String>[] playerCardsColor){
+    	for (int i = 0; i < players.length; i++){
+    		//see if double is there
+    		isDoubleNum(playerCardsInt[i].toArray())
+    		//if yes, see color
+    		//if no, see which number is bigger
+    	}
+    	return xxx;
+    } 
+    
+    
+    /**
+     * Method: return which color is powerful
+     * @param args
+     */
+    public int getColorRank (String pColors){
+    	int colorRank = 0;
+    	switch (pColors){
+    	case "spade":
+    		colorRank = 4;
+    		break;
+    	case "heart":
+    		colorRank = 3;
+    		break;
+    	case "club":
+    		colorRank = 2;
+    		break;
+    	case "diamond":
+    		colorRank = 1;
+    		break;
+    	}
+    	return colorRank;
+    }
+    
 	public static void main(String[] args)
 	{
+		int biggerPlayer = 0;
 		ShowHand sh = new ShowHand();
-		sh.initPlayer("player1" , "player2");
+		sh.initPlayer("player1" , "player2", "player3", "player4");
 		sh.initCards();
 		sh.initPlayerCards();
 		// 
@@ -279,7 +349,11 @@ public class ShowHand
 		// 
 		sh.deliverCard("player1");
 		sh.showPlayerCards();
-		sh.CardsComparison();
+		biggerPlayer = sh.CardsComparison(1);
+		
+		System.out.println("2nd Round Start: ---------------");
+		sh.deliverCard(players[biggerPlayer]);
+		sh.showPlayerCards();
 		/*
 		*
 		*/
