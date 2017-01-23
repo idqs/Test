@@ -1,0 +1,76 @@
+1	Document Purpose
+This document:
+•	is a Statement of Work (SOW) for the purposes of the Participation Agreement between ER Manila (the Service Provider) and each of the Participating Entities listed in the table below (together ANZ); and
+•	describes the services to be provided by the Service Provider to each of those Participating Entities and the terms upon which those services will be provided.
+
+Participating Entity	Date of Participation Agreement
+Australia & New Zealand Banking Group Limited acting in its capacity as the Singapore branch	19 October 2010
+No rates or fees are contained within this Statement of Work.
+
+
+3	Services
+3.1	Description of the Services
+The Service Provider will provide ANZ with the following services (the Services):
+
+Service ID	Service Name	Description
+001	Allocate & Assign ER cases 	The Service Provider will allocation cases from ANZ People Assist to Singapore ER Advisor based on a Decision Matrix
+
+5	Relief from Compliance with Service Levels
+5.1	Relief Events
+The Service Provider may request relief from complying with the Service Levels in the circumstances described below (Relief Events).
+ANZ and the Service Provider may agree on other Service Levels to apply for the duration of a Relief Event.
+During a Relief Event, reporting will continue on normal Service Levels, with any Relief Event identified in the reporting.
+
+5.2	Service Level Relief Notification
+The Service Provider shall notify ANZ of any circumstances which may constitute a Relief Event.
+ANZ will review the circumstances of each Relief Event to mitigate the risk of reoccurrence and reduce the severity of the impact. 
+
+6	Public Holidays
+The Service Provider will not provide Services on any public holiday* in Philippines. 
+* As updated year to year on MAX.
+
+7	Risk, Compliance and Business Continuity Management
+ANZ will be accountable for management and execution of operational risk and compliance in accordance with the Operational Risk Measurement and Management Policy and Procedures and the Compliance Management Policy and Procedures.
+Where ANZ requires the Service Provider to perform services associated with risk, compliance and business continuity planning, these will be detailed in Section 3, including any relevant service levels in Annexure A.
+Business Continuity Management
+Business Continuity Plan	The Service Provider will maintain an overarching business continuity plan for management of local business disruption events impacting operations and requiring restoration of operations locally at an alternate building and review them periodically based on Group BCM guidelines.  
+
+ANZ will continue to maintain the end to end business impact assessment, business continuity plans and testing for their global operations including planning and testing for a loss/unavailability of the Service Provider which will require restoration of operations at another location such as another hub, inter-state or country.
+
+Business Continuity Testing	Local Site to Site Test: The Service Provider will conduct an annual test or as frequently as required based on Group BCM guidelines for local, site to site business continuity test to ensure that the local site to site business continuity capability and capacity is tested and adequate.
+
+Whole of City Outage Test: The Service Provider will co-ordinate a Whole of City outage test on an annual basis or as frequently as required based on Group BCM guidelines for agreed material and critical processes.  ANZ remains accountable for management of the revert across process, reporting and execution during the annual Whole of City Outage test.
+
+8	Reporting
+The Service Provider will be responsible for providing performance reporting to ANZ in accordance with the terms of the Contract.  The format and frequency of performance reporting shall be agreed between ANZ and the Service Provider from time to time.
+9	Annual Review and Changes to SoW
+This SoW will be reviewed on an annual basis unless there is a significant business change event that takes place during that period that would warrant an immediate review. All changes to this SoW must be implemented in accordance with the ANZ Change Management Process (as agreed from time to time by the Contract Management Group).
+
+
+
+
+Annexure A – Customer Information
+
+
+No.	Requirements	Description
+(i)	Provide a summary of the Customer Information that will be stored by the Service Provider in the Hub	Not applicable 
+(ii)	List any specific requirements the Service Provider must comply with 	Service Provider is to comply with Singapore Banking Secrecy Act 
+(iii)	Specify how the Service Provider must return, destroy or dispose of the Customer Information stored in the Hub	Not applicable
+(iv)	List who can have access to the Customer Information stored in the Hub	Not applicable
+(v)	Specify the retention period requirements for the Customer Information stored in the Hub	Not applicable
+(vi)	Please specify the reason for storing the Customer Information in the Hub	Not applicable
+(vii)	List any additional requirements	
+
+ 
+
+Annexure B – Service Levels
+
+Service ID	Service Name	Service Level Name	Service Level ID	Purpose	Calculation	Data Source	Target Performance Level	Adherence to  Performance Level
+001	Allocation of case	Timely assigning of case to ER advisor	not applicable	Measure timely assigning of case to ER advisor 	Duration starting from the case received from ANZ People Assist to the time that the case is assigned to ER Advisor 	Service Desk	2 Business Days from receiving case from People Assist 
+	Green: ≥95% to 100%
+
+Amber: ≥90% to <95%
+
+Red: <90%
+
+
